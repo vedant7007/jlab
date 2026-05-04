@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Java Lab</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0d1117;--card:#161b22;--border:#30363d;
+  --text:#e6edf3;--dim:#8b949e;--accent:#58a6ff;
+  --green:#3fb950;--codebg:#0d1117;--weekbg:#1c2432;
+}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);line-height:1.5;padding:0 0 60px}
+.header{text-align:center;padding:28px 16px 20px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--bg);z-index:100;backdrop-filter:blur(10px)}
+.header h1{font-size:1.3rem;font-weight:700;letter-spacing:-.02em}
+.header p{font-size:.75rem;color:var(--dim);margin-top:2px}
+
+.nav{position:sticky;top:76px;z-index:99;background:var(--bg);border-bottom:1px solid var(--border);overflow-x:auto;white-space:nowrap;padding:8px 12px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.nav::-webkit-scrollbar{display:none}
+.nav a{display:inline-block;padding:5px 14px;font-size:.78rem;font-weight:600;color:var(--dim);text-decoration:none;border-radius:20px;border:1px solid var(--border);margin-right:6px;transition:.2s}
+.nav a:hover,.nav a.active{color:var(--accent);border-color:var(--accent);background:rgba(88,166,255,.08)}
+
+.container{max-width:780px;margin:0 auto;padding:0 12px}
+
+.week{margin-top:24px}
+.week-title{font-size:1rem;font-weight:700;color:var(--accent);padding:10px 16px;background:var(--weekbg);border-radius:10px;border-left:3px solid var(--accent);margin-bottom:12px}
+
+.prog{background:var(--card);border:1px solid var(--border);border-radius:12px;margin-bottom:14px;overflow:hidden}
+.prog-header{padding:12px 16px 8px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.prog-header h3{font-size:.88rem;font-weight:600;color:var(--text)}
+.prog-header .num{font-size:.7rem;color:var(--accent);background:rgba(88,166,255,.12);padding:2px 8px;border-radius:10px;font-weight:600}
+.prog-body{padding:0 16px 14px}
+
+.meta{font-size:.78rem;color:var(--dim);margin-bottom:8px;line-height:1.5}
+.meta b{color:var(--text);font-weight:600}
+
+pre{background:var(--codebg);border:1px solid var(--border);border-radius:8px;padding:12px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:.72rem;line-height:1.55;color:#e6edf3;margin:6px 0;-webkit-overflow-scrolling:touch;tab-size:4;position:relative}
+pre .copy-btn{position:absolute;top:6px;right:6px;background:var(--border);border:none;color:var(--dim);font-size:.65rem;padding:3px 8px;border-radius:4px;cursor:pointer;font-family:'DM Sans',sans-serif;opacity:0;transition:.2s}
+pre:hover .copy-btn{opacity:1}
+pre .copy-btn:hover{background:var(--accent);color:#fff}
+
+.output{background:rgba(63,185,80,.06);border:1px solid rgba(63,185,80,.2);border-radius:8px;padding:8px 12px;font-family:'JetBrains Mono',monospace;font-size:.7rem;color:var(--green);line-height:1.5;margin-top:6px}
+.output-label{font-size:.72rem;font-weight:600;color:var(--green);margin-top:8px;margin-bottom:2px}
+
+.search{padding:10px 12px;position:sticky;top:76px;z-index:98;background:var(--bg)}
+.search input{width:100%;padding:8px 14px;border-radius:8px;border:1px solid var(--border);background:var(--card);color:var(--text);font-size:.82rem;font-family:'DM Sans',sans-serif;outline:none}
+.search input:focus{border-color:var(--accent)}
+.search input::placeholder{color:var(--dim)}
+
+.hidden{display:none}
+
+.toc{padding:16px;max-width:780px;margin:0 auto}
+.toc h2{font-size:.9rem;color:var(--dim);margin-bottom:8px;font-weight:600}
+.toc a{display:block;padding:4px 0;font-size:.78rem;color:var(--accent);text-decoration:none}
+
+@media(max-width:500px){
+  .header h1{font-size:1.1rem}
+  pre{font-size:.67rem;padding:10px}
+  .prog-header h3{font-size:.82rem}
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>☕ Java Lab Programs</h1>
+  <p>Vedant Idlgave • 24911A05C5 • CSE-B • VJIT</p>
+</div>
+
+<div class="nav" id="nav">
+  <a href="#w12">Week 1-2</a>
+  <a href="#w3">Week 3</a>
+  <a href="#w45">Week 4-5</a>
+  <a href="#w67">Week 6-7</a>
+  <a href="#w89">Week 8-9</a>
+  <a href="#w1011">Week 10-11</a>
+</div>
+
+<div class="search">
+  <input type="text" id="searchBox" placeholder="🔍 Search... (e.g. thread, inheritance, array)">
+</div>
+
+<div class="container" id="content">
+
+<!-- =============== WEEK 1 & 2 =============== -->
+<div class="week" id="w12">
+<div class="week-title">Week 1 & 2</div>
+
+<div class="prog" data-tags="total average command line static">
+<div class="prog-header"><h3>1. Total, Average — Command-Line Args & Static Members</h3><span class="num">P1</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Find total and average using command-line args and static members.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class Calculator {
+    static int count = 0;
+    static double findTotal(double a, double b) { count++; return a + b; }
+    static double findAvg(double a, double b) { return (a + b) / 2.0; }
+
+    public static void main(String[] args) {
+        double a = Double.parseDouble(args[0]);
+        double b = Double.parseDouble(args[1]);
+        System.out.println("Total: " + findTotal(a, b));
+        System.out.println("Average: " + findAvg(a, b));
+        System.out.println("Called " + count + " time(s)");
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">java Calculator 10 20<br>Total: 30.0<br>Average: 15.0<br>Called 1 time(s)</div>
+</div></div>
+
+<div class="prog" data-tags="class objects constructor display">
+<div class="prog-header"><h3>2. Class and Objects</h3><span class="num">P2</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Demonstrate class and objects.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class Student {
+    String name; int rollNo;
+    Student(String n, int r) { name = n; rollNo = r; }
+    void display() { System.out.println(name + " - " + rollNo); }
+
+    public static void main(String[] args) {
+        Student s1 = new Student("Vedant", 101);
+        Student s2 = new Student("Rahul", 102);
+        s1.display(); s2.display();
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">Vedant - 101<br>Rahul - 102</div>
+</div></div>
+
+<div class="prog" data-tags="method constructor overloading polymorphism">
+<div class="prog-header"><h3>3. Method & Constructor Overloading</h3><span class="num">P3</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Illustrate method and constructor overloading (compile-time polymorphism).</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class Overload {
+    int a, b;
+    Overload()             { a = 0; b = 0; }
+    Overload(int x)        { a = x; b = x; }
+    Overload(int x, int y) { a = x; b = y; }
+
+    int add(int x, int y)          { return x + y; }
+    double add(double x, double y) { return x + y; }
+    int add(int x, int y, int z)   { return x + y + z; }
+
+    public static void main(String[] args) {
+        Overload o = new Overload(3, 7);
+        System.out.println("a=" + o.a + " b=" + o.b);
+        System.out.println("add(2,3)=" + o.add(2, 3));
+        System.out.println("add(2.5,3.5)=" + o.add(2.5, 3.5));
+        System.out.println("add(1,2,3)=" + o.add(1, 2, 3));
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">a=3 b=7<br>add(2,3)=5<br>add(2.5,3.5)=6.0<br>add(1,2,3)=6</div>
+</div></div>
+
+<div class="prog" data-tags="parameter passing objects reference box">
+<div class="prog-header"><h3>4. Parameter Passing Using Objects</h3><span class="num">P4</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Demonstrate passing objects as parameters.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class Box {
+    double l, w, h;
+    Box(double l, double w, double h) { this.l=l; this.w=w; this.h=h; }
+    double volume() { return l * w * h; }
+    boolean isEqual(Box b) { return (l==b.l && w==b.w && h==b.h); }
+
+    public static void main(String[] args) {
+        Box b1 = new Box(10,20,30), b2 = new Box(10,20,30);
+        Box b3 = new Box(5,10,15);
+        System.out.println("Volume: " + b1.volume());
+        System.out.println("b1==b2? " + b1.isEqual(b2));
+        System.out.println("b1==b3? " + b1.isEqual(b3));
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">Volume: 6000.0<br>b1==b2? true<br>b1==b3? false</div>
+</div></div>
+
+<div class="prog" data-tags="array sorting searching bubble sort linear search manipulation">
+<div class="prog-header"><h3>5. Array Manipulation</h3><span class="num">P5</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Array sorting (Bubble Sort) and searching (Linear Search).</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class ArrayDemo {
+    public static void main(String[] args) {
+        int[] a = {64, 25, 12, 22, 11};
+        for (int i = 0; i &lt; a.length-1; i++)
+            for (int j = 0; j &lt; a.length-i-1; j++)
+                if (a[j] > a[j+1]) { int t=a[j]; a[j]=a[j+1]; a[j+1]=t; }
+        System.out.print("Sorted: ");
+        for (int x : a) System.out.print(x + " ");
+        int key = 22;
+        for (int i = 0; i &lt; a.length; i++)
+            if (a[i] == key) System.out.println("\n" + key + " at index " + i);
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">Sorted: 11 12 22 25 64<br>22 at index 3</div>
+</div></div>
+</div>
+
+<!-- =============== WEEK 3 =============== -->
+<div class="week" id="w3">
+<div class="week-title">Week 3</div>
+
+<div class="prog" data-tags="inheritance single multilevel multiple interface">
+<div class="prog-header"><h3>1. Types of Inheritance</h3><span class="num">P6</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Single, multilevel inheritance via extends; multiple via interfaces.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class Animal { void eat() { System.out.println("Animal eats"); } }
+class Dog extends Animal { void bark() { System.out.println("Dog barks"); } }
+class Puppy extends Dog { void weep() { System.out.println("Puppy weeps"); } }
+
+interface Swim { void swim(); }
+interface Run  { void run(); }
+class Athlete implements Swim, Run {
+    public void swim() { System.out.println("Athlete swims"); }
+    public void run()  { System.out.println("Athlete runs"); }
+}
+class InheritanceDemo {
+    public static void main(String[] args) {
+        Puppy p = new Puppy();
+        p.eat(); p.bark(); p.weep();
+        Athlete a = new Athlete(); a.swim(); a.run();
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">Animal eats<br>Dog barks<br>Puppy weeps<br>Athlete swims<br>Athlete runs</div>
+</div></div>
+
+<div class="prog" data-tags="method overriding runtime polymorphism shape circle">
+<div class="prog-header"><h3>2. Method Overriding</h3><span class="num">P7</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Subclass overrides parent method — runtime polymorphism.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class Shape { void area() { System.out.println("Area of shape"); } }
+class Circle extends Shape {
+    double r;
+    Circle(double r) { this.r = r; }
+    void area() { System.out.println("Circle: " + (3.14*r*r)); }
+}
+class Rect extends Shape {
+    double l, b;
+    Rect(double l, double b) { this.l=l; this.b=b; }
+    void area() { System.out.println("Rect: " + (l*b)); }
+}
+class OverrideDemo {
+    public static void main(String[] args) {
+        Shape s = new Circle(5);  s.area();
+        s = new Rect(4, 6);      s.area();
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">Circle: 78.5<br>Rect: 24.0</div>
+</div></div>
+
+<div class="prog" data-tags="dynamic method dispatch polymorphism vehicle car bike">
+<div class="prog-header"><h3>3. Dynamic Method Dispatch</h3><span class="num">P8</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Superclass ref holds subclass object — JVM resolves method at runtime.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class Vehicle { void start() { System.out.println("Vehicle starts"); } }
+class Car extends Vehicle { void start() { System.out.println("Car: key start"); } }
+class Bike extends Vehicle { void start() { System.out.println("Bike: kick start"); } }
+
+class DMDDemo {
+    public static void main(String[] args) {
+        Vehicle v;
+        v = new Car();  v.start();
+        v = new Bike(); v.start();
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">Car: key start<br>Bike: kick start</div>
+</div></div>
+
+<div class="prog" data-tags="final keyword variable method class constant">
+<div class="prog-header"><h3>4. Final Keyword</h3><span class="num">P9</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> final variable = constant, final method = no override, final class = no inherit.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class Constants {
+    final int MAX = 100;
+    final void show() { System.out.println("MAX = " + MAX); }
+}
+final class FinalClass {
+    void display() { System.out.println("Final class"); }
+}
+class FinalDemo {
+    public static void main(String[] args) {
+        Constants c = new Constants();
+        c.show();
+        new FinalClass().display();
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">MAX = 100<br>Final class</div>
+</div></div>
+</div>
+
+<!-- =============== WEEK 4 & 5 =============== -->
+<div class="week" id="w45">
+<div class="week-title">Week 4 & 5</div>
+
+<div class="prog" data-tags="package import creation mypack">
+<div class="prog-header"><h3>1. Packages</h3><span class="num">P10</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Create and use packages. Compile: <code>javac -d . mypack/MyClass.java</code></p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>// File: mypack/MyClass.java
+package mypack;
+public class MyClass {
+    public void greet() { System.out.println("Hello from mypack!"); }
+}
+
+// File: PackageDemo.java
+import mypack.MyClass;
+class PackageDemo {
+    public static void main(String[] args) {
+        new MyClass().greet();
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">Hello from mypack!</div>
+</div></div>
+
+<div class="prog" data-tags="exception handling try catch finally multiple">
+<div class="prog-header"><h3>2. Exception Handling — Multiple Catch Blocks</h3><span class="num">P11</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Handle different exceptions with multiple catch blocks + finally.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class MultiCatch {
+    public static void main(String[] args) {
+        try {
+            int[] arr = {1, 2, 3};
+            System.out.println(arr[5]);
+            int x = 10 / 0;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Array error: " + e);
+        } catch (ArithmeticException e) {
+            System.out.println("Math error: " + e);
+        } catch (Exception e) {
+            System.out.println("Error: " + e);
+        } finally {
+            System.out.println("Finally always runs");
+        }
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">Array error: java.lang.ArrayIndexOutOfBoundsException<br>Finally always runs</div>
+</div></div>
+
+<div class="prog" data-tags="user defined custom exception throw throws">
+<div class="prog-header"><h3>3. User Defined Exceptions</h3><span class="num">P12</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Create custom exception by extending Exception class.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class AgeException extends Exception {
+    AgeException(String msg) { super(msg); }
+}
+class CustomExDemo {
+    static void checkAge(int age) throws AgeException {
+        if (age &lt; 18) throw new AgeException(age + " - can't vote!");
+        System.out.println(age + " - can vote!");
+    }
+    public static void main(String[] args) {
+        try { checkAge(20); checkAge(15); }
+        catch (AgeException e) { System.out.println("Caught: " + e.getMessage()); }
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">20 - can vote!<br>Caught: 15 - can't vote!</div>
+</div></div>
+</div>
+
+<!-- =============== WEEK 6 & 7 =============== -->
+<div class="week" id="w67">
+<div class="week-title">Week 6 & 7</div>
+
+<div class="prog" data-tags="multithreading thread start run sleep">
+<div class="prog-header"><h3>1. Multithreading</h3><span class="num">P13</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Create threads by extending Thread. Override run(), call start().</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class MyThread extends Thread {
+    MyThread(String name) { super(name); }
+    public void run() {
+        for (int i = 1; i &lt;= 3; i++) {
+            System.out.println(getName() + " : " + i);
+            try { Thread.sleep(500); } catch (Exception e) {}
+        }
+    }
+    public static void main(String[] args) {
+        new MyThread("Thread-A").start();
+        new MyThread("Thread-B").start();
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">Thread-A : 1<br>Thread-B : 1<br>Thread-A : 2<br>(interleaved)</div>
+</div></div>
+
+<div class="prog" data-tags="thread priority min max norm">
+<div class="prog-header"><h3>2. Thread Priorities</h3><span class="num">P14</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Set thread priorities (1=MIN, 5=NORM, 10=MAX). Higher = more CPU time.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class PThread extends Thread {
+    PThread(String s) { super(s); }
+    public void run() {
+        System.out.println(getName() + " pri=" + getPriority());
+        for (int i = 1; i &lt;= 3; i++) System.out.println(getName() + "-" + i);
+    }
+    public static void main(String[] args) {
+        PThread t1=new PThread("LOW"), t2=new PThread("MID"), t3=new PThread("HIGH");
+        t1.setPriority(Thread.MIN_PRIORITY);
+        t2.setPriority(Thread.NORM_PRIORITY);
+        t3.setPriority(Thread.MAX_PRIORITY);
+        t1.start(); t2.start(); t3.start();
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">HIGH pri=10<br>HIGH-1, 2, 3 (generally runs first)<br>MID pri=5 | LOW pri=1</div>
+</div></div>
+
+<div class="prog" data-tags="synchronization synchronized lock thread safe">
+<div class="prog-header"><h3>3. Synchronization</h3><span class="num">P15</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> synchronized keyword locks method — one thread at a time.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>class PrintTable {
+    synchronized void print(int n) {
+        for (int i = 1; i &lt;= 5; i++) {
+            System.out.println(Thread.currentThread().getName()
+                + ": " + n + "x" + i + "=" + (n*i));
+            try { Thread.sleep(200); } catch (Exception e) {}
+        }
+    }
+}
+class SyncDemo {
+    public static void main(String[] args) {
+        PrintTable pt = new PrintTable();
+        new Thread(() -> pt.print(5), "T1").start();
+        new Thread(() -> pt.print(10), "T2").start();
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">T1: 5x1=5 ... 5x5=25 (completes first)<br>T2: 10x1=10 ... 10x5=50</div>
+</div></div>
+</div>
+
+<!-- =============== WEEK 8 & 9 =============== -->
+<div class="week" id="w89">
+<div class="week-title">Week 8 & 9</div>
+
+<div class="prog" data-tags="string tokenizer split delimiter csv">
+<div class="prog-header"><h3>1. String Tokenizer</h3><span class="num">P16</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Split strings using StringTokenizer. Default delimiter = space, custom = any char.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>import java.util.StringTokenizer;
+class TokenDemo {
+    public static void main(String[] args) {
+        StringTokenizer st = new StringTokenizer("Java is fun");
+        System.out.println("Tokens: " + st.countTokens());
+        while (st.hasMoreTokens()) System.out.println(st.nextToken());
+
+        System.out.println("--- CSV ---");
+        StringTokenizer st2 = new StringTokenizer("Vedant,CSE,VJIT", ",");
+        while (st2.hasMoreTokens()) System.out.println(st2.nextToken());
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">Tokens: 3<br>Java<br>is<br>fun<br>--- CSV ---<br>Vedant<br>CSE<br>VJIT</div>
+</div></div>
+
+<div class="prog" data-tags="file read write bufferedreader bufferedwriter io">
+<div class="prog-header"><h3>2. File Read & Write (Line by Line)</h3><span class="num">P17</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Read from one file, write to another using BufferedReader/Writer.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>import java.io.*;
+class FileCopy {
+    public static void main(String[] args) throws IOException {
+        BufferedWriter bw = new BufferedWriter(new FileWriter("input.txt"));
+        bw.write("Hello line 1\nThis is line 2\nEnd");
+        bw.close();
+
+        BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+        BufferedWriter out = new BufferedWriter(new FileWriter("output.txt"));
+        String line;
+        while ((line = br.readLine()) != null) {
+            System.out.println("Read: " + line);
+            out.write(line + "\n");
+        }
+        br.close(); out.close();
+        System.out.println("Copied to output.txt!");
+    }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">Read: Hello line 1<br>Read: This is line 2<br>Read: End<br>Copied to output.txt!</div>
+</div></div>
+</div>
+
+<!-- =============== WEEK 10 & 11 =============== -->
+<div class="week" id="w1011">
+<div class="week-title">Week 10 & 11</div>
+
+<div class="prog" data-tags="event handling keyboard mouse awt keylistener mouselistener">
+<div class="prog-header"><h3>1. Event Handling (Keyboard & Mouse)</h3><span class="num">P18</span></div>
+<div class="prog-body">
+<p class="meta"><b>Aim:</b> Handle key presses & mouse clicks using AWT listeners.</p>
+<pre><button class="copy-btn" onclick="copyCode(this)">Copy</button>import java.awt.*;
+import java.awt.event.*;
+class EventDemo extends Frame implements KeyListener, MouseListener {
+    String msg = "Press key or click mouse";
+    EventDemo() {
+        setSize(400,300); setTitle("Events"); setVisible(true);
+        addKeyListener(this); addMouseListener(this);
+        addWindowListener(new WindowAdapter() {
+            public void windowClosing(WindowEvent e) { System.exit(0); }
+        });
+    }
+    public void keyPressed(KeyEvent e) {
+        msg = "Key: " + e.getKeyChar(); repaint();
+    }
+    public void keyReleased(KeyEvent e) {}
+    public void keyTyped(KeyEvent e) {}
+    public void mouseClicked(MouseEvent e) {
+        msg = "Click (" + e.getX() + "," + e.getY() + ")"; repaint();
+    }
+    public void mousePressed(MouseEvent e) {}
+    public void mouseReleased(MouseEvent e) {}
+    public void mouseEntered(MouseEvent e) {}
+    public void mouseExited(MouseEvent e) {}
+    public void paint(Graphics g) { g.drawString(msg, 50, 150); }
+    public static void main(String[] args) { new EventDemo(); }
+}</pre>
+<p class="output-label">Output:</p>
+<div class="output">GUI window opens<br>Press key → shows character<br>Click mouse → shows (x,y)</div>
+</div></div>
+</div>
+
+</div><!-- /container -->
+
+<script>
+// Search
+document.getElementById('searchBox').addEventListener('input', function() {
+    const q = this.value.toLowerCase();
+    document.querySelectorAll('.prog').forEach(p => {
+        const text = p.textContent.toLowerCase() + ' ' + (p.dataset.tags || '');
+        p.style.display = text.includes(q) ? '' : 'none';
+    });
+    // Show/hide week headers
+    document.querySelectorAll('.week').forEach(w => {
+        const visible = w.querySelectorAll('.prog:not([style*="display: none"])').length;
+        w.querySelector('.week-title').style.display = visible ? '' : 'none';
+    });
+});
+
+// Copy code
+function copyCode(btn) {
+    const code = btn.parentElement.textContent.replace('Copy', '').trim();
+    navigator.clipboard.writeText(code).then(() => {
+        btn.textContent = '✓';
+        setTimeout(() => btn.textContent = 'Copy', 1500);
+    });
+}
+
+// Active nav on scroll
+const sections = document.querySelectorAll('.week');
+const navLinks = document.querySelectorAll('.nav a');
+window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 160) current = s.id; });
+    navLinks.forEach(a => {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+});
+</script>
+</body>
+</html>
